@@ -6,11 +6,8 @@ module HashToOpenStruct
     when Array
       obj.map { |v| call(v) }
     when Hash
-      attrs = obj.each_with_object({}) do |(k, v), h|
-                h[k] = call(v)
-              end
-
-      OpenStruct.new(attrs)
+      obj.each { |k, v| obj[k] = call(v) }
+      OpenStruct.new(obj)
     else
       obj
     end
